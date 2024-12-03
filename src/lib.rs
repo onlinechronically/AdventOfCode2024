@@ -1,5 +1,6 @@
 mod day_01;
 mod day_02;
+mod day_03;
 mod utils;
 
 #[cfg(test)]
@@ -9,6 +10,7 @@ mod tests {
     use super::*;
     use day_01::{similarity_sum, sum_differences};
     use day_02::total_safe_reports;
+    use day_03::{evaluate_multiplication, evaluate_multiplication_with_toggle};
     use utils::read_lines_string;
 
     const DAY: u8 = 3;
@@ -27,6 +29,9 @@ mod tests {
         } else if DAY == 2 {
             assert_eq!(output_one, total_safe_reports(input_read.clone(), true));
             assert_eq!(output_two, total_safe_reports(input_read, false));
+        } else if DAY == 3 {
+            assert_eq!(output_one, evaluate_multiplication(input_read.clone()));
+            assert_eq!(output_two, evaluate_multiplication_with_toggle(input_read));
         } else {
             dbg!();
         }
