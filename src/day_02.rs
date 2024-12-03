@@ -1,3 +1,4 @@
+#[cfg(test)]
 pub fn is_safe(nums: Vec<i64>) -> bool {
     if nums.len() == 1 {
         return true;
@@ -22,43 +23,33 @@ pub fn is_safe(nums: Vec<i64>) -> bool {
     return flag;
 }
 
-#[allow(dead_code)]
-pub fn total_safe_reports(reports: String, is_strict: bool) -> Result<i64, ()> {
+#[cfg(test)]
+pub fn total_safe_reports(reports: String, is_strict: bool) -> i64 {
+    use crate::utils::read_lines_split;
+
     let mut total = 0;
-    let mut lines = reports.lines();
-    loop {
-        match lines.next() {
-            Some(line) => {
-                let mut str_nums = line.split(" ");
-                let mut nums: Vec<i64> = Vec::new();
-                loop {
-                    match str_nums.next() {
-                        Some(curr) => match curr.parse() {
-                            Ok(n) => nums.push(n),
-                            Err(_) => return Err(()),
-                        },
-                        None => break,
-                    }
-                }
-                let mut modifications: Vec<Vec<i64>> = Vec::new();
-                for i in 0..nums.len() {
-                    let mut new_list = nums.clone();
-                    new_list.remove(i);
-                    modifications.push(new_list);
-                }
-                if is_safe(nums) {
-                    total += 1;
-                } else if !is_strict
-                    && modifications
-                        .iter()
-                        .map(|lon| is_safe(lon.to_vec()))
-                        .any(|b| b)
-                {
-                    total += 1;
-                }
-            }
-            None => break,
+    let lines = read_lines_split(reports, " ");
+    for line_data in lines {
+        let modifications: Vec<Vec<i64>> = (0..line_data.len())
+            .map(|index| {
+                line_data
+                    .iter()
+                    .enumerate()
+                    .filter(|(i, _)| *i != index)
+                    .map(|(_, v)| v.to_owned())
+                    .collect()
+            })
+            .collect();
+        if is_safe(line_data) {
+            total += 1;
+        } else if !is_strict
+            && modifications
+                .iter()
+                .map(|lon| is_safe(lon.to_vec()))
+                .any(|b| b)
+        {
+            total += 1;
         }
     }
-    return Ok(total);
+    return total;
 }
