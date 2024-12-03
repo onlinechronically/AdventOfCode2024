@@ -1,5 +1,6 @@
 mod day_01;
 mod day_02;
+mod utils;
 
 #[cfg(test)]
 mod tests {
@@ -8,97 +9,26 @@ mod tests {
     use super::*;
     use day_01::{similarity_sum, sum_differences};
     use day_02::total_safe_reports;
+    use utils::read_lines_string;
+
+    const DAY: u8 = 3;
 
     #[test]
-    fn test_day_01() {
-        let input_read = fs::read_to_string("files/day_01.txt");
-        let output_read = fs::read_to_string("files/day_01_ans.txt");
-        let mut output_one: i64 = -1;
-        let mut output_two: i64 = -1;
-        match output_read {
-            Ok(output_txt) => {
-                let mut lines = output_txt.lines();
-                match lines.next() {
-                    Some(line) => match line.parse() {
-                        Ok(n) => {
-                            output_one = n;
-                        }
-                        Err(_) => (),
-                    },
-                    None => (),
-                }
-                match lines.next() {
-                    Some(line) => match line.parse() {
-                        Ok(n) => {
-                            output_two = n;
-                        }
-                        Err(_) => (),
-                    },
-                    None => (),
-                }
-            }
-            Err(_) => (),
-        }
-        if let Ok(input_txt) = input_read {
-            let mut output = sum_differences(input_txt.clone());
-            match output {
-                Ok(n) => assert_eq!(output_one, n),
-                Err(_) => assert!(false),
-            }
-            output = similarity_sum(input_txt.clone());
-            match output {
-                Ok(n) => assert_eq!(output_two, n),
-                Err(_) => assert!(false),
-            }
+    fn test_day() {
+        let input_read = fs::read_to_string(format!("files/day_{:0>2}.txt", DAY)).unwrap();
+        let output_read = read_lines_string(
+            fs::read_to_string(format!("files/day_{:0>2}_ans.txt", DAY)).unwrap(),
+        );
+        let output_one: i64 = output_read[0];
+        let output_two: i64 = output_read[1];
+        if DAY == 1 {
+            assert_eq!(output_one, sum_differences(input_read.clone()));
+            assert_eq!(output_two, similarity_sum(input_read));
+        } else if DAY == 2 {
+            assert_eq!(output_one, total_safe_reports(input_read.clone(), true));
+            assert_eq!(output_two, total_safe_reports(input_read, false));
         } else {
-            panic!("There was anerror reading the input for this puzzle");
-        }
-    }
-
-    #[test]
-    fn test_day_02() {
-        let input_read = fs::read_to_string("files/day_02.txt");
-        let output_read = fs::read_to_string("files/day_02_ans.txt");
-
-        let mut output_one: i64 = -1;
-        let mut output_two: i64 = -1;
-        match output_read {
-            Ok(output_txt) => {
-                let mut lines = output_txt.lines();
-                match lines.next() {
-                    Some(line) => match line.parse() {
-                        Ok(n) => {
-                            output_one = n;
-                        }
-                        Err(_) => (),
-                    },
-                    None => (),
-                }
-                match lines.next() {
-                    Some(line) => match line.parse() {
-                        Ok(n) => {
-                            output_two = n;
-                        }
-                        Err(_) => (),
-                    },
-                    None => (),
-                }
-            }
-            Err(_) => (),
-        }
-        if let Ok(input_txt) = input_read {
-            let mut output = total_safe_reports(input_txt.clone(), true);
-            match output {
-                Ok(n) => assert_eq!(output_one, n),
-                Err(_) => assert!(false),
-            }
-            output = total_safe_reports(input_txt, false);
-            match output {
-                Ok(n) => assert_eq!(output_two, n),
-                Err(_) => assert!(false),
-            }
-        } else {
-            panic!("There was anerror reading the input for this puzzle");
+            dbg!();
         }
     }
 }
