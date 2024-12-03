@@ -14,10 +14,16 @@ mod tests {
     use utils::read_lines_string;
 
     const DAY: u8 = 3;
+    const DEBUG: bool = false;
 
     #[test]
     fn test_day() {
-        let input_read = fs::read_to_string(format!("files/day_{:0>2}.txt", DAY)).unwrap();
+        let input_read: String;
+        if DEBUG {
+            input_read = fs::read_to_string(format!("files/temp.txt")).unwrap();
+        } else {
+            input_read = fs::read_to_string(format!("files/day_{:0>2}.txt", DAY)).unwrap();
+        }
         let output_read = read_lines_string(
             fs::read_to_string(format!("files/day_{:0>2}_ans.txt", DAY)).unwrap(),
         );
