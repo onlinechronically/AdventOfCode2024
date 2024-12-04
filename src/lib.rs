@@ -1,6 +1,7 @@
 mod day_01;
 mod day_02;
 mod day_03;
+mod day_04;
 mod utils;
 
 #[cfg(test)]
@@ -11,9 +12,10 @@ mod tests {
     use day_01::{similarity_sum, sum_differences};
     use day_02::total_safe_reports;
     use day_03::{evaluate_multiplication, evaluate_multiplication_with_toggle};
+    use day_04::{xmas_word_search, xmas_x_search};
     use utils::read_lines_string;
 
-    const DAY: u8 = 3;
+    const DAY: u8 = 4;
     const DEBUG: bool = false;
 
     #[test]
@@ -38,6 +40,9 @@ mod tests {
         } else if DAY == 3 {
             assert_eq!(output_one, evaluate_multiplication(input_read.clone()));
             assert_eq!(output_two, evaluate_multiplication_with_toggle(input_read));
+        } else if DAY == 4 {
+            assert_eq!(output_one, xmas_word_search(input_read.clone()));
+            assert_eq!(output_two, xmas_x_search(input_read));
         } else {
             dbg!();
         }
