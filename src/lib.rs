@@ -29,8 +29,8 @@ mod tests {
         let output_read = read_lines_string(
             fs::read_to_string(format!("files/day_{:0>2}_ans.txt", DAY)).unwrap(),
         );
-        let output_one: i64 = output_read[0];
-        let output_two: i64 = output_read[1];
+        let output_one: i64 = if !DEBUG { output_read[0] } else { -1 };
+        let output_two: i64 = if !DEBUG { output_read[1] } else { -1 };
         if DAY == 1 {
             assert_eq!(output_one, sum_differences(input_read.clone()));
             assert_eq!(output_two, similarity_sum(input_read));
