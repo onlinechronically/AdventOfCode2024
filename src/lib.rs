@@ -2,6 +2,7 @@ mod day_01;
 mod day_02;
 mod day_03;
 mod day_04;
+mod day_05;
 mod utils;
 
 #[cfg(test)]
@@ -13,9 +14,10 @@ mod tests {
     use day_02::total_safe_reports;
     use day_03::{evaluate_multiplication, evaluate_multiplication_with_toggle};
     use day_04::{xmas_word_search, xmas_x_search};
+    use day_05::{correct_prints_sum, valid_middle_job_sum};
     use utils::read_lines_string;
 
-    const DAY: u8 = 4;
+    const DAY: u8 = 5;
     const DEBUG: bool = false;
 
     #[test]
@@ -43,6 +45,9 @@ mod tests {
         } else if DAY == 4 {
             assert_eq!(output_one, xmas_word_search(input_read.clone()));
             assert_eq!(output_two, xmas_x_search(input_read));
+        } else if DAY == 5 {
+            assert_eq!(output_one, valid_middle_job_sum(input_read.clone()));
+            assert_eq!(output_two, correct_prints_sum(input_read));
         } else {
             dbg!();
         }
