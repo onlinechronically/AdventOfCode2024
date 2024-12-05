@@ -31,3 +31,12 @@ pub fn read_lines_split_str(data: String, delimeter: &str) -> Vec<Vec<String>> {
         .map(|line| line.split(delimeter).map(|s| s.to_string()).collect())
         .collect();
 }
+
+#[cfg(test)]
+pub fn filter_lines(data: String, func: fn(s: String) -> bool) -> String {
+    return read_lines(&data)
+        .into_iter()
+        .filter(|s| func(s.clone()))
+        .reduce(|s1, s2| s1 + "\n" + &s2)
+        .unwrap_or("".to_string());
+}
