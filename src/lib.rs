@@ -3,6 +3,8 @@ mod day_02;
 mod day_03;
 mod day_04;
 mod day_05;
+mod day_06;
+mod day_07;
 mod utils;
 
 #[cfg(test)]
@@ -15,9 +17,11 @@ mod tests {
     use day_03::{evaluate_multiplication, evaluate_multiplication_with_toggle};
     use day_04::{xmas_word_search, xmas_x_search};
     use day_05::{correct_prints_sum, valid_middle_job_sum};
+    use day_06::{get_tiles_touched, MazeResult, MazeType};
+    use day_07::sum_valid_equations;
     use utils::read_lines_string;
 
-    const DAY: u8 = 5;
+    const DAY: u8 = 7;
     const DEBUG: bool = false;
 
     #[test]
@@ -48,6 +52,14 @@ mod tests {
         } else if DAY == 5 {
             assert_eq!(output_one, valid_middle_job_sum(input_read.clone()));
             assert_eq!(output_two, correct_prints_sum(input_read));
+        } else if DAY == 6 {
+            assert_eq!(
+                MazeResult::Tiles(output_one),
+                get_tiles_touched(MazeType::String(input_read.clone()), false)
+            );
+        } else if DAY == 7 {
+            assert_eq!(output_one, sum_valid_equations(input_read.clone(), false));
+            assert_eq!(output_two, sum_valid_equations(input_read.clone(), true));
         } else {
             dbg!();
         }
